@@ -64,9 +64,7 @@ public class GPSPoint {
 	
 	public String toString() {
 		
-		String str;
-		
-		throw new UnsupportedOperationException(TODO.method());
+		return time + " (" + latitude + "," + longitude + ") " + elevation + "\n";
 
 		// TODO
 		
