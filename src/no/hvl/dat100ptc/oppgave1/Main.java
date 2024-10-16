@@ -11,6 +11,6 @@ public class Main {
 
    //     System.out.println("Nytt tidspunkt: " + gpsPoint.getTime());
 
-        System.out.println("GPSPoint informasjon: " + gpsPoint.toString());
+        System.out.println("GPSPoint info: " + gpsPoint.toString());
     }
 }
