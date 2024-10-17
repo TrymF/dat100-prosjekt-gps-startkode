@@ -12,7 +12,6 @@ public class GPSData {
 
 		this.gpspoints = new GPSPoint[antall];
         this.antall = 0;
-		// TODO
 	}
 
 	public GPSPoint[] getGPSPoints() {
