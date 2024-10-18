@@ -125,12 +125,7 @@ public class GPSUtils {
 
 	public static String formatDouble(double d) {
 
-		String str;
-
-		
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO
+		return String.format("%10.2f", d);
 		
 	}
 }
