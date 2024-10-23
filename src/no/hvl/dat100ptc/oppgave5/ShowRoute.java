@@ -13,15 +13,15 @@ public class ShowRoute extends EasyGraphics {
 
 	private static int MARGIN = 50;
 	private static int MAPXSIZE = 800;
-	private static int MAPYSIZE = 800;
+	private static int MAPYSIZE = 600;
 
 	private GPSPoint[] gpspoints;
 	private GPSComputer gpscomputer;
-	
+
 	private double minlon, minlat, maxlon, maxlat;
 
 	private double xstep, ystep;
-	
+
 	public ShowRoute() {
 
 		String filename = JOptionPane.showInputDialog("GPS data filnavn: ");
@@ -44,14 +44,14 @@ public class ShowRoute extends EasyGraphics {
 
 		maxlon = GPSUtils.findMax(GPSUtils.getLongitudes(gpspoints));
 		maxlat = GPSUtils.findMax(GPSUtils.getLatitudes(gpspoints));
-		
+
 		xstep = scale(MAPXSIZE, minlon, maxlon);
 		ystep = scale(MAPYSIZE, minlat, maxlat);
-		
+
 		showRouteMap(MARGIN + MAPYSIZE);
 
 		replayRoute(MARGIN + MAPYSIZE);
-		
+
 		showStatistics();
 	}
 
@@ -64,28 +64,58 @@ public class ShowRoute extends EasyGraphics {
 
 	public void showRouteMap(int ybase) {
 
-		// TODO 
-		throw new UnsupportedOperationException(TODO.method());
-		
+		setColor(0, 255, 0);
+
+		for (int i = 0; i < gpspoints.length; i++) {
+			int x = MARGIN + (int) ((gpspoints[i].getLongitude() - minlon) * xstep);
+			int y = ybase - (int) ((gpspoints[i].getLatitude() - minlat) * ystep);
+
+			drawCircle(x, y, 2);
+		}
+
 	}
 
 	public void showStatistics() {
 
 		int TEXTDISTANCE = 20;
 
-		setColor(0,0,0);
-		setFont("Courier",12);
-		
-		// TODO
-		throw new UnsupportedOperationException(TODO.method());
-		
+		setColor(0, 0, 0);
+		setFont("Cambria", 12);
+
+		String totalTime = String.format("Total Time     : %s", GPSUtils.formatTime(gpscomputer.totalTime()));
+		String totalDistance = String.format("Total Distance : %.2f km", gpscomputer.totalDistance() / 1000);
+		String totalElevation = String.format("Total Elevation: %.2f m", gpscomputer.totalElevation());
+		String maxSpeed = String.format("Max Speed      : %.2f km/h", gpscomputer.maxSpeed());
+		String averageSpeed = String.format("Average Speed  : %.2f km/h", gpscomputer.averageSpeed());
+		String energy = String.format("Energy         : %.2f kcal", gpscomputer.totalKcal(gpscomputer.getWeight()));
+
+		drawString(totalTime, MARGIN, TEXTDISTANCE);
+		drawString(totalDistance, MARGIN, TEXTDISTANCE * 2);
+		drawString(totalElevation, MARGIN, TEXTDISTANCE * 3);
+		drawString(maxSpeed, MARGIN, TEXTDISTANCE * 4);
+		drawString(averageSpeed, MARGIN, TEXTDISTANCE * 5);
+		drawString(energy, MARGIN, TEXTDISTANCE * 5);
+
 	}
 
 	public void replayRoute(int ybase) {
+		setColor(0, 0, 255);
+		int radius = 5;
 
-		// TODO 
-		throw new UnsupportedOperationException(TODO.method());
-		
+		int x = MARGIN + (int) ((gpspoints[0].getLongitude() - minlon) * xstep);
+		int y = ybase - (int) ((gpspoints[0].getLatitude() - minlat) * ystep);
+
+		int circle = fillCircle(x, y, radius);
+
+		for (int i = 1; i < gpspoints.length; i++) {
+			int newX = MARGIN + (int) ((gpspoints[i].getLongitude() - minlon) * xstep);
+			int newY = ybase - (int) ((gpspoints[i].getLatitude() - minlat) * ystep);
+
+			moveCircle(circle, newX, newY);
+			setSpeed(100);
+
+		}
+
 	}
 
 }

@@ -140,7 +140,11 @@ public class GPSComputer {
 	}
 
 	private static double WEIGHT = 80.0;
-
+	
+	public double getWeight() {
+		return WEIGHT;
+	}
+	
 	public void displayStatistics() {
 
 		    double totalTime = totalTime();                     
